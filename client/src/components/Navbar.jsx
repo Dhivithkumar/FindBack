@@ -90,7 +90,12 @@ export default function Navbar() {
               <NavLink to="/claims">Claims</NavLink>
               <NavLink to="/notifications" className="nav-notif">
                 Notifications
-                {unread > 0 && <span className="nav-count" aria-label={`${unread} unread`}>{unread}</span>}
+                {unread > 0 && (
+                  <span className="nav-count" aria-label={`${unread} unread`}>
+                    <span className="ping-ring" aria-hidden="true" />
+                    {unread}
+                  </span>
+                )}
               </NavLink>
               {user.role === 'admin' && <NavLink to="/admin">Admin</NavLink>}
               <NavLink to="/profile">Profile</NavLink>
