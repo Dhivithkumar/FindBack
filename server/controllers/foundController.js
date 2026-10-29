@@ -21,7 +21,7 @@ exports.createFound = asyncHandler(async (req, res) => {
     foundAt,
     storageLocation,
     hiddenDetails,
-    image: req.file ? `/uploads/${req.file.filename}` : '',
+    image: req.file ? (req.file.path || `/uploads/${req.file.filename}`) : '',
   });
 
   // Tell everyone whose lost report looks like this item
@@ -104,7 +104,7 @@ exports.updateFound = asyncHandler(async (req, res) => {
   });
   if (req.file) {
     removeUpload(item.image);
-    item.image = `/uploads/${req.file.filename}`;
+    item.image = req.file.path || `/uploads/${req.file.filename}`;
   } else if (req.body.removeImage === 'true') {
     removeUpload(item.image);
     item.image = '';

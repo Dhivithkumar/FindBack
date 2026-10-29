@@ -18,7 +18,7 @@ exports.createLost = asyncHandler(async (req, res) => {
     description,
     location,
     lostAt,
-    image: req.file ? `/uploads/${req.file.filename}` : '',
+    image: req.file ? (req.file.path || `/uploads/${req.file.filename}`) : '',
   });
 
   const matches = await findMatchesForLost(lost);
@@ -73,7 +73,7 @@ exports.updateLost = asyncHandler(async (req, res) => {
   });
   if (req.file) {
     removeUpload(item.image);
-    item.image = `/uploads/${req.file.filename}`;
+    item.image = req.file.path || `/uploads/${req.file.filename}`;
   } else if (req.body.removeImage === 'true') {
     removeUpload(item.image);
     item.image = '';
